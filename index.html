@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-платформа для автоматизации клиентского сервиса | QSOFT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --accent: #FF4D00;
+            --accent-light: #FF6B2C;
+            --dark: #0A0A0F;
+            --dark-light: #12121A;
+            --dark-card: #1A1A24;
+            --gray: #6B7280;
+            --gray-light: #9CA3AF;
+            --white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #6C3CE1 0%, #8B5CF6 50%, #A78BFA 100%);
+            --gradient-accent: linear-gradient(135deg, #FF4D00 0%, #FF6B2C 100%);
+            --gradient-dark: linear-gradient(180deg, #0A0A0F 0%, #12121A 100%);
+            --gradient-hero: linear-gradient(135deg, #0A0A0F 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-cta {
+            background: var(--gradient-accent);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 77, 0, 0.3);
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 120px 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(108, 60, 225, 0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 77, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(108, 60, 225, 0.2);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge::before {
+            content: '✦';
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #E5E5E5 50%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-light);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: var(--white);
+            box-shadow: 0 4px 20px rgba(255, 77, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 77, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-light);
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.15);
+            color: var(--primary-light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Modules Section */
+        .modules {
+            background: var(--dark-light);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .module-card {
+            background: var(--dark-card);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(108, 60, 225, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-icon.purple { background: rgba(108, 60, 225, 0.2); }
+        .module-icon.orange { background: rgba(255, 77, 0, 0.2); }
+        .module-icon.blue { background: rgba(59, 130, 246, 0.2); }
+        .module-icon.green { background: rgba(34, 197, 94, 0.2); }
+
+        .module-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .module-card p {
+            color: var(--gray-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .module-features {
+            list-style: none;
+        }
+
+        .module-features li {
+            padding: 0.5rem 0;
+            color: var(--gray-light);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .module-features li::before {
+            content: '✓';
+            color: var(--primary-light);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Audience Section */
+        .audience {
+            background: var(--dark);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .audience-card {
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.1) 0%, rgba(255, 77, 0, 0.05) 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .audience-card:hover {
+            border-color: rgba(108, 60, 225, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .audience-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .audience-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .audience-card > p {
+            color: var(--gray-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .pain-point {
+            background: rgba(255, 77, 0, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .pain-point strong {
+            color: var(--accent-light);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pain-point p {
+            margin-top: 0.5rem;
+            color: var(--gray-light);
+            font-size: 0.95rem;
+        }
+
+        /* Problems Section */
+        .problems {
+            background: var(--dark-light);
+        }
+
+        .problems-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--dark-card);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .problems-table th,
+        .problems-table td {
+            padding: 1.5rem 2rem;
+            text-align: left;
+        }
+
+        .problems-table th {
+            background: rgba(108, 60, 225, 0.1);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-light);
+        }
+
+        .problems-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .problems-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .problems-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .problems-table td:first-child {
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .problems-table td:last-child {
+            color: var(--gray-light);
+        }
+
+        /* Results Section */
+        .results {
+            background: var(--dark);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .result-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            border-color: rgba(108, 60, 225, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .result-card .value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-card .label {
+            color: var(--gray-light);
+            font-size: 0.95rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--dark-card);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+        }
+
+        .comparison-table th {
+            background: rgba(108, 60, 225, 0.1);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .comparison-table th:first-child {
+            text-align: left;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .comparison-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .before {
+            color: var(--gray);
+        }
+
+        .after {
+            color: #22C55E;
+            font-weight: 600;
+        }
+
+        /* Case Study Section */
+        .case-study {
+            background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
+        }
+
+        .case-card {
+            background: var(--dark-card);
+            border-radius: 32px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .case-badge {
+            background: rgba(255, 77, 0, 0.15);
+            color: var(--accent-light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .case-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .case-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .case-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+        }
+
+        .case-section p,
+        .case-section li {
+            color: var(--gray-light);
+            line-height: 1.7;
+        }
+
+        .case-section ul {
+            list-style: none;
+        }
+
+        .case-section ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .case-section ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .case-results {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .case-result-item {
+            text-align: center;
+        }
+
+        .case-result-item .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #22C55E;
+            margin-bottom: 0.25rem;
+        }
+
+        .case-result-item .label {
+            font-size: 0.85rem;
+            color: var(--gray-light);
+        }
+
+        /* Why QSOFT Section */
+        .why-qsoft {
+            background: var(--dark);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .why-card {
+            background: var(--dark-card);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .why-card:hover {
+            border-color: rgba(108, 60, 225, 0.3);
+        }
+
+        .why-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .why-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .why-card p {
+            color: var(--gray-light);
+            line-height: 1.7;
+        }
+
+        /* Process Section */
+        .process {
+            background: var(--dark-light);
+        }
+
+        .process-timeline {
+            position: relative;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+            transform: translateX(-50%);
+        }
+
+        .process-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .process-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--dark-light);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .process-content {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .process-item:nth-child(odd) .process-content {
+            grid-column: 1;
+            text-align: right;
+        }
+
+        .process-item:nth-child(even) .process-content {
+            grid-column: 2;
+        }
+
+        .process-item:nth-child(odd) .process-placeholder {
+            grid-column: 2;
+        }
+
+        .process-item:nth-child(even) .process-placeholder {
+            grid-column: 1;
+        }
+
+        .process-duration {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.2);
+            color: var(--primary-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .process-content h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .process-content p {
+            color: var(--gray-light);
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: var(--dark);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--dark-card);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Популярный выбор';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .pricing-card:hover {
+            border-color: rgba(108, 60, 225, 0.5);
+        }
+
+        .pricing-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-light);
+        }
+
+        .pricing-desc {
+            color: var(--gray-light);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: #22C55E;
+            font-weight: bold;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured .pricing-btn {
+            background: var(--gradient-accent);
+            color: var(--white);
+        }
+
+        .pricing-card:not(.featured) .pricing-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-card:not(.featured) .pricing-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-note {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(108, 60, 225, 0.2) 0%, transparent 50%);
+            transform: translateX(-50%);
+        }
+
+        .cta-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-light);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--gray-light);
+        }
+
+        .cta-feature::before {
+            content: '✓';
+            width: 24px;
+            height: 24px;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22C55E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-copy {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .modules-grid,
+            .audience-grid,
+            .why-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .case-content {
+                grid-template-columns: 1fr;
+            }
+
+            .case-results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-timeline::before {
+                left: 20px;
+            }
+
+            .process-item {
+                grid-template-columns: 1fr;
+                padding-left: 50px;
+            }
+
+            .process-item::before {
+                left: 20px;
+                transform: translateY(-50%);
+            }
+
+            .process-item:nth-child(odd) .process-content,
+            .process-item:nth-child(even) .process-content {
+                grid-column: 1;
+                text-align: left;
+            }
+
+            .process-placeholder {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 80px 1rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .case-results {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .problems-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .cta-features {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">QSOFT</div>
+            <ul class="nav-links">
+                <li><a href="#modules">Модули</a></li>
+                <li><a href="#audience">Для кого</a></li>
+                <li><a href="#results">Результаты</a></li>
+                <li><a href="#case">Кейс</a></li>
+                <li><a href="#pricing">Стоимость</a></li>
+            </ul>
+            <a href="#cta" class="nav-cta">Получить расчёт</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">AI-решение для бизнеса</div>
+                <h1>
+                    <span>AI-платформа</span> для автоматизации<br>клиентского сервиса
+                </h1>
+                <p class="hero-subtitle">
+                    Комплексное решение, которое объединяет базу знаний, чат-бота, голосового помощника и аналитику в единую систему. Снижаем нагрузку на операторов до 60%.
+                </p>
+                <div class="hero-cta">
+                    <a href="#cta" class="btn btn-primary">
+                        Получить бесплатный аудит
+                        <span>→</span>
+                    </a>
+                    <a href="#modules" class="btn btn-secondary">
+                        Узнать больше
+                    </a>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value">20+</div>
+                        <div class="stat-label">лет экспертизы</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">60%</div>
+                        <div class="stat-label">обращений без оператора</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2-3×</div>
+                        <div class="stat-label">быстрее ответы</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8-12</div>
+                        <div class="stat-label">месяцев окупаемость</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section class="modules" id="modules">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Модули платформы</div>
+                <h2 class="section-title">Четыре модуля — одна система</h2>
+                <p class="section-subtitle">
+                    Каждый модуль работает автономно, но максимальный эффект достигается при комплексном внедрении
+                </p>
+            </div>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon purple">📚</div>
+                    <h3>AI База знаний</h3>
+                    <p>Центральный элемент системы на базе Teamly — единый источник истины для всей компании.</p>
+                    <ul class="module-features">
+                        <li>Умный RAG-поиск по всем документам</li>
+                        <li>Поиск по содержимому файлов</li>
+                        <li>Совместное редактирование</li>
+                        <li>Гибкая система доступов</li>
+                        <li>Публичная база для клиентов</li>
+                        <li>Аналитика использования</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-icon orange">💬</div>
+                    <h3>AI Чат-бот</h3>
+                    <p>Виджет для сайта и приложения на базе Sunflower, который отвечает на вопросы клиентов 24/7.</p>
+                    <ul class="module-features">
+                        <li>Интеграция с базой знаний</li>
+                        <li>Мгновенные ответы 24/7</li>
+                        <li>Передача оператору с контекстом</li>
+                        <li>Telegram, WhatsApp, ВКонтакте</li>
+                        <li>Персонализация ответов</li>
+                        <li>Аналитика диалогов</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-icon blue">📞</div>
+                    <h3>AI Голосовой помощник</h3>
+                    <p>Автоматизация входящих звонков на базе Yandex SpeechKit с интеграцией в базу знаний.</p>
+                    <ul class="module-features">
+                        <li>Распознавание речи и намерений</li>
+                        <li>Ответы из базы знаний</li>
+                        <li>Умная маршрутизация</li>
+                        <li>Запись и транскрибация</li>
+                        <li>Интеграция с CRM</li>
+                        <li>Отчёты по звонкам</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-icon green">📊</div>
+                    <h3>BI и аналитика</h3>
+                    <p>Дашборды для мониторинга эффективности и принятия решений в реальном времени.</p>
+                    <ul class="module-features">
+                        <li>Доля обращений, закрытых AI</li>
+                        <li>Среднее время ответа</li>
+                        <li>CSAT по каналам</li>
+                        <li>Топ запросов и пробелы</li>
+                        <li>Нагрузка по времени</li>
+                        <li>Кастомные отчёты</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience Section -->
+    <section class="audience" id="audience">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Целевые сегменты</div>
+                <h2 class="section-title">Для кого это решение</h2>
+                <p class="section-subtitle">
+                    Мы работаем с компаниями, где автоматизация клиентского сервиса даёт измеримый бизнес-эффект
+                </p>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-icon">🛒</div>
+                    <h3>Ритейл и e-commerce</h3>
+                    <p>Сети с собственными контакт-центрами, где большой объём типовых обращений: статус заказа, возвраты, наличие товара, условия доставки.</p>
+                    <div class="pain-point">
+                        <strong>Типичная боль</strong>
+                        <p>Сезонные пики нагрузки, высокая текучка операторов, долгий онбординг новых сотрудников.</p>
+                    </div>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">🏦</div>
+                    <h3>Финансовый сектор</h3>
+                    <p>Банки, страховые компании, МФО с высокими требованиями к скорости и качеству ответов.</p>
+                    <div class="pain-point">
+                        <strong>Типичная боль</strong>
+                        <p>Жёсткие SLA, необходимость консистентных ответов, compliance-риски при ошибках операторов.</p>
+                    </div>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">📡</div>
+                    <h3>Телеком и сервисные компании</h3>
+                    <p>Провайдеры, операторы связи, управляющие компании с режимом поддержки 24/7.</p>
+                    <div class="pain-point">
+                        <strong>Типичная боль</strong>
+                        <p>Дорогая ночная смена, сложность масштабирования при росте абонентской базы.</p>
+                    </div>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">💻</div>
+                    <h3>B2B с технической поддержкой</h3>
+                    <p>IT-вендоры, производители оборудования, SaaS-платформы с экспертной поддержкой.</p>
+                    <div class="pain-point">
+                        <strong>Типичная боль</strong>
+                        <p>Сложная документация, долгий поиск информации, зависимость от экспертизы отдельных сотрудников.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section class="problems" id="problems">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Решаемые задачи</div>
+                <h2 class="section-title">Какие проблемы решаем</h2>
+            </div>
+            <table class="problems-table">
+                <thead>
+                    <tr>
+                        <th>Проблема</th>
+                        <th>Как решаем</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Операторы долго ищут информацию</td>
+                        <td>AI-поиск по базе знаний выдаёт релевантный ответ за 2-3 секунды</td>
+                    </tr>
+                    <tr>
+                        <td>Высокая нагрузка на контакт-центр</td>
+                        <td>Чат-бот и голосовой помощник обрабатывают типовые запросы без участия оператора</td>
+                    </tr>
+                    <tr>
+                        <td>Долгий онбординг новых сотрудников</td>
+                        <td>Единая база знаний + AI-подсказки сокращают время выхода на линию</td>
+                    </tr>
+                    <tr>
+                        <td>Нет прозрачности по метрикам</td>
+                        <td>BI-дашборды показывают эффективность в реальном времени</td>
+                    </tr>
+                    <tr>
+                        <td>Разрозненные источники информации</td>
+                        <td>Всё собрано в единой системе с контролем версий и доступов</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results" id="results">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Подтверждённые результаты</div>
+                <h2 class="section-title">Метрики по проектам QSOFT</h2>
+                <p class="section-subtitle">
+                    Данные усреднены по проектам в сегментах ритейл и финтех, 2023-2024 гг.
+                </p>
+            </div>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="value">45-60%</div>
+                    <div class="label">обращений без оператора</div>
+                </div>
+                <div class="result-card">
+                    <div class="value">2-3×</div>
+                    <div class="label">быстрее время ответа</div>
+                </div>
+                <div class="result-card">
+                    <div class="value">30-50%</div>
+                    <div class="label">снижение нагрузки</div>
+                </div>
+                <div class="result-card">
+                    <div class="value">15-25%</div>
+                    <div class="label">рост CSAT</div>
+                </div>
+                <div class="result-card">
+                    <div class="value">20-30%</div>
+                    <div class="label">экономия затрат</div>
+                </div>
+                <div class="result-card">
+                    <div class="value">8-12 мес</div>
+                    <div class="label">окупаемость</div>
+                </div>
+            </div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th>До внедрения</th>
+                        <th>После внедрения</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Доля обращений без оператора</td>
+                        <td class="before">5-10%</td>
+                        <td class="after">45-60%</td>
+                    </tr>
+                    <tr>
+                        <td>Среднее время ответа</td>
+                        <td class="before">3-5 минут</td>
+                        <td class="after">40-90 секунд</td>
+                    </tr>
+                    <tr>
+                        <td>Время онбординга оператора</td>
+                        <td class="before">2-3 недели</td>
+                        <td class="after">5-7 дней</td>
+                    </tr>
+                    <tr>
+                        <td>Нагрузка на оператора</td>
+                        <td class="before">100%</td>
+                        <td class="after">50-70%</td>
+                    </tr>
+                    <tr>
+                        <td>CSAT</td>
+                        <td class="before">65-75%</td>
+                        <td class="after">80-90%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Case Study Section -->
+    <section class="case-study" id="case">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Кейс</div>
+                <h2 class="section-title">Федеральная розничная сеть</h2>
+            </div>
+            <div class="case-card">
+                <div class="case-header">
+                    <div class="case-badge">Ритейл • 120 операторов</div>
+                </div>
+                <div class="case-content">
+                    <div class="case-section">
+                        <h4>Задача</h4>
+                        <p>Снизить нагрузку на контакт-центр в период распродаж, сократить время ожидания клиента на линии.</p>
+                    </div>
+                    <div class="case-section">
+                        <h4>Решение</h4>
+                        <ul>
+                            <li>Внедрили базу знаний Teamly с 1500+ статьями</li>
+                            <li>Запустили чат-бот на сайте и в мобильном приложении</li>
+                            <li>Интегрировали голосового помощника на горячую линию</li>
+                            <li>Настроили дашборды для руководителей КЦ</li>
+                        </ul>
+                    </div>
+                    <div class="case-results">
+                        <div class="case-result-item">
+                            <div class="value">52%</div>
+                            <div class="label">обращений закрывает бот</div>
+                        </div>
+                        <div class="case-result-item">
+                            <div class="value">38%</div>
+                            <div class="label">звонков — голосовой AI</div>
+                        </div>
+                        <div class="case-result-item">
+                            <div class="value">45 сек</div>
+                            <div class="label">время ожидания (было 4 мин)</div>
+                        </div>
+                        <div class="case-result-item">
+                            <div class="value">+18</div>
+                            <div class="label">пунктов NPS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why QSOFT Section -->
+    <section class="why-qsoft" id="why">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Почему мы</div>
+                <h2 class="section-title">Почему QSOFT</h2>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-number">01</div>
+                    <div>
+                        <h3>20+ лет интеграционной экспертизы</h3>
+                        <p>Мы не вендор одного продукта — мы подбираем оптимальный стек под ваши задачи и бюджет. Работаем с лучшими решениями рынка.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">02</div>
+                    <div>
+                        <h3>Комплексный подход</h3>
+                        <p>Проектируем архитектуру, внедряем, обучаем команду, поддерживаем и развиваем. Полный цикл от идеи до результата.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">03</div>
+                    <div>
+                        <h3>Работаем с enterprise</h3>
+                        <p>Понимаем специфику крупного бизнеса: согласования, безопасность, интеграция с legacy-системами, compliance.</p>
+                    </div>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">04</div>
+                    <div>
+                        <h3>Гарантируем результат</h3>
+                        <p>Фиксируем целевые метрики в договоре. Не достигли — дорабатываем за свой счёт. Ваш успех = наша репутация.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Процесс</div>
+                <h2 class="section-title">Как мы работаем</h2>
+                <p class="section-subtitle">
+                    От первого звонка до первых результатов — 6-8 недель
+                </p>
+            </div>
+            <div class="process-timeline">
+                <div class="process-item">
+                    <div class="process-content">
+                        <div class="process-duration">2-3 недели</div>
+                        <h3>Аудит и проектирование</h3>
+                        <p>Анализируем текущие процессы, определяем точки автоматизации, проектируем архитектуру решения под ваши задачи.</p>
+                    </div>
+                    <div class="process-placeholder"></div>
+                </div>
+                <div class="process-item">
+                    <div class="process-placeholder"></div>
+                    <div class="process-content">
+                        <div class="process-duration">4-6 недель</div>
+                        <h3>Пилотный запуск</h3>
+                        <p>Внедряем MVP на ограниченном периметре, замеряем метрики, собираем обратную связь, дорабатываем.</p>
+                    </div>
+                </div>
+                <div class="process-item">
+                    <div class="process-content">
+                        <div class="process-duration">6-10 недель</div>
+                        <h3>Масштабирование</h3>
+                        <p>Раскатываем решение на все каналы, обучаем команду, интегрируем с вашими системами.</p>
+                    </div>
+                    <div class="process-placeholder"></div>
+                </div>
+                <div class="process-item">
+                    <div class="process-placeholder"></div>
+                    <div class="process-content">
+                        <div class="process-duration">Постоянно</div>
+                        <h3>Поддержка и развитие</h3>
+                        <p>SLA 24/7, регулярные улучшения на основе аналитики, расширение базы знаний, новые сценарии.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Тарифы</div>
+                <h2 class="section-title">Стоимость внедрения</h2>
+                <p class="section-subtitle">
+                    Выберите конфигурацию под ваши задачи
+                </p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-name">Базовый</div>
+                    <div class="pricing-price">от 1,5 млн ₽</div>
+                    <div class="pricing-desc">Быстрый старт для компаний с текстовыми каналами</div>
+                    <ul class="pricing-features">
+                        <li>База знаний Teamly</li>
+                        <li>AI-поиск по документам</li>
+                        <li>Чат-бот для сайта</li>
+                        <li>Базовая аналитика</li>
+                        <li>Обучение команды</li>
+                        <li>3 месяца поддержки</li>
+                    </ul>
+                    <a href="#cta" class="pricing-btn">Получить расчёт</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-name">Стандарт</div>
+                    <div class="pricing-price">от 3 млн ₽</div>
+                    <div class="pricing-desc">Полная автоматизация текстовых и голосовых каналов</div>
+                    <ul class="pricing-features">
+                        <li>Всё из тарифа «Базовый»</li>
+                        <li>Голосовой AI-помощник</li>
+                        <li>Интеграция с CRM</li>
+                        <li>Расширенная аналитика</li>
+                        <li>Telegram, WhatsApp</li>
+                        <li>6 месяцев поддержки</li>
+                    </ul>
+                    <a href="#cta" class="pricing-btn">Получить расчёт</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-name">Полный</div>
+                    <div class="pricing-price">от 5 млн ₽</div>
+                    <div class="pricing-desc">Enterprise-решение с глубокой кастомизацией</div>
+                    <ul class="pricing-features">
+                        <li>Всё из тарифа «Стандарт»</li>
+                        <li>BI-дашборды под заказ</li>
+                        <li>Интеграция с legacy</li>
+                        <li>Выделенная команда</li>
+                        <li>SLA 24/7</li>
+                        <li>12 месяцев поддержки</li>
+                    </ul>
+                    <a href="#cta" class="pricing-btn">Получить расчёт</a>
+                </div>
+            </div>
+            <p class="pricing-note">
+                * Указаны цены за внедрение. Лицензии на Teamly, Yandex SpeechKit и другие компоненты оплачиваются отдельно по тарифам вендоров.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы автоматизировать<br>клиентский сервис?</h2>
+                <p class="cta-subtitle">
+                    Оставьте заявку на бесплатный аудит — проанализируем ваш контакт-центр и покажем, какой эффект можно получить
+                </p>
+                <div class="cta-features">
+                    <div class="cta-feature">Созвон 30 минут</div>
+                    <div class="cta-feature">Анализ метрик</div>
+                    <div class="cta-feature">Расчёт ROI</div>
+                    <div class="cta-feature">Дорожная карта</div>
+                </div>
+                <a href="mailto:sales@qsoft.ru" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.25rem 2.5rem;">
+                    Получить бесплатный расчёт
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">QSOFT</div>
+            <div class="footer-links">
+                <a href="https://qsoft.ru" target="_blank">qsoft.ru</a>
+                <a href="mailto:sales@qsoft.ru">sales@qsoft.ru</a>
+                <a href="tel:+74951234567">+7 495 123-45-67</a>
+            </div>
+            <div class="footer-copy">© 2024 QSOFT. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 15, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 15, 0.8)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.module-card, .audience-card, .why-card, .pricing-card, .result-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
