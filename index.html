@@ -430,7 +430,7 @@
             transition: all 0.3s ease;
             display: grid;
             grid-template-rows: auto auto 1fr auto;
-            min-height: 280px;
+            min-height: 300px;
         }
 
         .audience-card:hover {
@@ -459,9 +459,10 @@
         .pain-point {
             background: rgba(255, 77, 0, 0.1);
             border-left: 2px solid var(--accent);
-            padding: 0.75rem 1rem;
+            padding: 1rem 1.25rem;
             border-radius: 0 10px 10px 0;
             align-self: end;
+            min-height: 85px;
         }
 
         .pain-point strong {
@@ -472,10 +473,10 @@
         }
 
         .pain-point p {
-            margin-top: 0.35rem;
+            margin-top: 0.5rem;
             color: var(--gray-light);
             font-size: 0.8rem;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .problems {
@@ -1105,6 +1106,10 @@
             }
 
             .audience-card {
+                min-height: auto;
+            }
+
+            .pain-point {
                 min-height: auto;
             }
 
